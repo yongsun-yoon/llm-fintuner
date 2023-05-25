@@ -2,7 +2,7 @@ defaults:
     - general
     
 model:
-    name: google/mt5-large
+    name: bigscience/mt0-large
     
 data:
     input_max_length: 512

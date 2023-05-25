@@ -101,17 +101,23 @@ def main(cfg):
         for st, batch in enumerate(pbar):
             fabric.barrier()
             
-            is_accumulating = (st % cfg.train.gradient_accumulation_steps) != 0
-            with fabric.no_backward_sync(model, enabled=is_accumulating):
-                outputs = model(**batch)
-                loss = outputs.loss
-                fabric.backward(loss)
+#             is_accumulating = (st % cfg.train.gradient_accumulation_steps) != 0
+#             with fabric.no_backward_sync(wrapped_model, enabled=is_accumulating):
+#                 outputs = wrapped_model(**batch)
+#                 loss = outputs.loss
+#                 fabric.backward(loss)
                 
-            if not is_accumulating:
-                optimizer.step()
-                optimizer.zero_grad()
-                
+#             if not is_accumulating:
+#                 optimizer.step()
+#                 optimizer.zero_grad()
+
+            optimizer.zero_grad()
+            outputs = model(**batch)
+            loss = outputs.loss
+            fabric.backward(loss)
+            optimizer.step()
             scheduler.step()
+            
             if fabric.is_global_zero:
                 log = {'loss': loss.item()}
                 pbar.set_postfix(log)

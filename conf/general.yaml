@@ -12,7 +12,7 @@ lora:
 
 optimizer:
     type: adamw
-    lr: 1e-4
+    lr: 2e-4
     weight_decay: 0.
 
 
@@ -22,7 +22,7 @@ scheduler:
 
 
 train:
-    num_epochs: 1
+    num_epochs: 3
     gradient_accumulation_steps: 4
 
 

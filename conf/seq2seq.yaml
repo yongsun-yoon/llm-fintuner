@@ -1,0 +1,12 @@
+defaults:
+    - general
+    
+model:
+    name: google/mt5-large
+    
+data:
+    input_max_length: 512
+    output_max_length: 384
+    batch_size: 4
+
+

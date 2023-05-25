@@ -1,0 +1,33 @@
+seed: 23
+wandb_project_name: llm
+ckpt_dir: ckpt
+inference_device: cuda:0
+
+lora:
+    target_modules: [q, v]
+    r: 16
+    alpha: 32
+    dropout: 0.1
+    
+
+optimizer:
+    type: adamw
+    lr: 1e-4
+    weight_decay: 0.
+
+
+scheduler:
+    type: cosine
+    warmup_ratio: 0.03
+
+
+train:
+    num_epochs: 1
+    gradient_accumulation_steps: 4
+
+
+fabric:
+    accelerator: gpu
+    strategy: ddp
+    devices: [0]
+    precision: 16-mixed
